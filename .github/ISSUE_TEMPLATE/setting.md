@@ -1,5 +1,5 @@
 ---
-name: Bug Report
+name: Setting
 about: 환경 설정
 title: "[Setting] 환경 설정"
 labels: "Setting"

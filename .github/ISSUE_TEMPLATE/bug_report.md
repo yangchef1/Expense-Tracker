@@ -2,7 +2,7 @@
 name: Bug Report
 about: 버그 수정 요청
 title: "[BUG] 버그 수정 요청"
-labels: "BugFix"
+labels: "Bug"
 assignees: "yangchef1"
 ---
 
