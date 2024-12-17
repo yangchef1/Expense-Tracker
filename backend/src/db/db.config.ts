@@ -13,5 +13,3 @@ export const connectDB = async () => {
     console.error("DB connection error:", err);
   }
 };
-
-connectDB();
