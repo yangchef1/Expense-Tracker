@@ -1,0 +1,4 @@
+type Query {
+  getExpenses: [Expense!]!
+  getExpense(id: ID!): Expense
+}
