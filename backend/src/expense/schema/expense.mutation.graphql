@@ -1,17 +1,3 @@
-type Expense {
-  id: ID!
-  title: String!
-  amount: Float!
-  category: String!
-  date: String!
-  description: String
-}
-
-type Query {
-  getExpenses: [Expense!]!
-  getExpense(id: ID!): Expense
-}
-
 type Mutation {
   addExpense(
     title: String!

@@ -1,12 +1,12 @@
 import { ApolloServer } from "apollo-server";
 import { connectDB } from "./db/db.config";
 import { loadFiles } from "@graphql-tools/load-files";
-import { expenseResolvers } from "./resolver/expense.resolver";
+import { expenseResolvers } from "./expense/resolver/expense.resolver";
 
 async function startServer() {
   connectDB();
 
-  const typeDefs = await loadFiles("./src/schema/*.graphql");
+  const typeDefs = await loadFiles("./src/**/schema/*.graphql");
 
   const server = new ApolloServer({
     typeDefs,

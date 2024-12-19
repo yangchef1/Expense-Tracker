@@ -1,0 +1,8 @@
+type Expense {
+  id: ID!
+  title: String!
+  amount: Float!
+  category: String!
+  date: String!
+  description: String
+}
