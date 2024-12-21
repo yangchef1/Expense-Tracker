@@ -6,12 +6,16 @@ export function registResolvers(resolverClasses: any[]) {
 
   try {
     resolverClasses.forEach((resolver) => {
+      const resolverInstance = new resolver();
+
       resolver.queries.forEach((methodName: any) => {
-        resolvers.Query[methodName] = new resolver()[methodName];
+        resolvers.Query[methodName] =
+          resolverInstance[methodName].bind(resolverInstance);
       });
 
       resolver.mutations.forEach((methodName: any) => {
-        resolvers.Mutation[methodName] = new resolver()[methodName];
+        resolvers.Mutation[methodName] =
+          resolverInstance[methodName].bind(resolverInstance);
       });
     });
   } catch (error) {
