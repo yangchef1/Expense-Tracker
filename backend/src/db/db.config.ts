@@ -1,15 +1,19 @@
-import mongoose from "mongoose";
 import dotenv from "dotenv";
+import { Env } from "../type/env.type";
 
 dotenv.config();
 
-export const connectDB = async () => {
-  try {
-    await mongoose.connect(
-      `mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`
-    );
-    console.log("MongoDB connected");
-  } catch (err) {
-    console.error("DB connection error:", err);
-  }
+export const dbConfig: Record<Env, { url: string; options: any }> = {
+  development: {
+    url: `mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`,
+    options: {
+      debug: true,
+    },
+  },
+  production: {
+    url: `mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`,
+    options: {
+      readPreference: "secondaryPreferred",
+    },
+  },
 };
