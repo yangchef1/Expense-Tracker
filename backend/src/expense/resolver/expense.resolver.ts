@@ -1,79 +1,37 @@
-import { Expense } from "../model/Expense";
+import Mutation from "../../decorator/mutation.decorator";
+import Query from "../../decorator/query.decorator";
+import { ExpenseInput, ExpenseUpdate } from "../../type/expense.type";
+import { ExpenseService } from "../service/expense.service";
 
-export const expenseResolvers = {
-  Query: {
-    getExpenses: async () => {
-      return await Expense.find();
-    },
+export class ExpenseResolver {
+  private expenseService: ExpenseService;
 
-    getExpense: async (_: any, { id }: { id: string }) => {
-      return await Expense.findById(id);
-    },
-  },
+  constructor() {
+    this.expenseService = new ExpenseService();
+  }
 
-  Mutation: {
-    addExpense: async (
-      _: any,
-      {
-        title,
-        amount,
-        category,
-        date,
-        description,
-      }: {
-        title: string;
-        amount: number;
-        category: string;
-        date: string;
-        description: string | null;
-      }
-    ) => {
-      const newExpense = new Expense({
-        title,
-        amount,
-        category,
-        date,
-        description,
-      });
-      await newExpense.save();
-      return newExpense;
-    },
+  @Query()
+  public async getExpenses() {
+    return await this.expenseService.getExpenses();
+  }
 
-    updateExpense: async (
-      _: any,
-      {
-        id,
-        title,
-        amount,
-        category,
-        date,
-        description,
-      }: {
-        id: string;
-        title?: string;
-        amount?: number;
-        category?: string;
-        date?: string;
-        description?: string | null;
-      }
-    ) => {
-      const updatedExpense = await Expense.findByIdAndUpdate(
-        id,
-        { title, amount, category, date, description },
-        { new: true }
-      );
-      if (!updatedExpense) {
-        throw new Error("Expense not found");
-      }
-      return updatedExpense;
-    },
+  @Query()
+  public async getExpense(_: any, { id }: { id: string }) {
+    return await this.expenseService.getExpense(id);
+  }
 
-    deleteExpense: async (_: any, { id }: { id: string }) => {
-      const deletedExpense = await Expense.findByIdAndDelete(id);
-      if (!deletedExpense) {
-        throw new Error("Expense not found");
-      }
-      return true;
-    },
-  },
-};
+  @Mutation()
+  public async addExpense(_: any, expenseInput: ExpenseInput) {
+    return await this.expenseService.addExpense(expenseInput);
+  }
+
+  @Mutation()
+  public async updateExpense(_: any, expenseUpdate: ExpenseUpdate) {
+    return await this.expenseService.updateExpense(expenseUpdate);
+  }
+
+  @Mutation()
+  public async deleteExpense(_: any, { id }: { id: string }) {
+    return await this.expenseService.deleteExpense(id);
+  }
+}
